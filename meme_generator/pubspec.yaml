@@ -9,16 +9,46 @@ environment:
   sdk: 3.2.3 # Dart SDK version
   flutter: 3.16.3 # Flutter SDK version
 
+
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  #images from url
+  cached_network_image: ^3.3.1
 
+  #images from gallery
+  image_picker: ^1.0.7
+  screenshot: ^2.1.0
+
+  #share images
+  share_plus: ^7.2.2
+
+  #slider for template list
+  carousel_slider: ^4.2.1
+
+  #database
+  floor: ^1.4.2
+
+  #bloc
+  flutter_bloc: ^8.1.4
+
+  #DI
+  get_it: ^7.6.7
+
+  equatable: ^2.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  floor_generator: ^1.4.2
+  build_runner: ^2.4.8
 
   flutter_lints: ^2.0.1
 flutter:
   uses-material-design: true
+  assets:
+    - assets/img/rock.jpg
+  fonts:
+    - family: times
+      fonts:
+        - asset: assets/fonts/times.ttf

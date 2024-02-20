@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/drawer.dart';
+
 class MemeGeneratorScreen extends StatelessWidget {
   const MemeGeneratorScreen({Key? key}) : super(key: key);
 
@@ -12,6 +14,7 @@ class MemeGeneratorScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
+      drawer: const MyDrawer(),
       backgroundColor: Colors.black,
       body: Center(
         child: ColoredBox(
@@ -35,7 +38,7 @@ class MemeGeneratorScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Image.network(
-                          'https://i.cbc.ca/1.6713656.1679693029!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/this-is-fine.jpg',
+                          'https://www.recordnet.com/gcdn/presto/2021/03/22/NRCD/9d9dd9e4-e84a-402e-ba8f-daa659e6e6c5-PhotoWord_003.JPG?width=660&height=425&fit=crop&format=pjpg&auto=webp',
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class OutlinedTextFormField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? Function(String?)? validator;
   final TextStyle? style;
+  final Function(String)? onDataChanged;
 
   const OutlinedTextFormField(
       {super.key,
       this.hintText = '',
       this.obscureText = false,
-      required this.controller,
+      this.controller,
       this.validator,
-      this.style});
+      this.style,
+      this.onDataChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,8 @@ class OutlinedTextFormField extends StatelessWidget {
           focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(width: 1, color: Colors.white)),
           hintText: hintText,
-      hintStyle: const TextStyle(color: Colors.grey)),
+          hintStyle: const TextStyle(color: Colors.grey)),
+      onChanged: onDataChanged,
     );
   }
 }
