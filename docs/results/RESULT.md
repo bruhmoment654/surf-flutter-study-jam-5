@@ -43,7 +43,7 @@
 
 ![demotivator_page](https://github.com/bruhmoment654/surf-flutter-study-jam-5/assets/99661323/7e13dbfa-c39c-46bf-b0d5-244597ff52ef) ![create_dem](https://github.com/bruhmoment654/surf-flutter-study-jam-5/assets/99661323/fe50af2b-b416-48ab-a66f-08011fccf4bf)</br>
 Окно с демотиватором, изменением картинки и кнопкой "Поделиться", а также окно создания шаблона
-![drawer](https://github.com/bruhmoment654/surf-flutter-study-jam-5/assets/99661323/32183c90-d746-44e5-b6cd-565f0bea2b78) ![dem_carousel](https://github.com/bruhmoment654/surf-flutter-study-jam-5/assets/99661323/a6ff2656-70ed-4383-b294-73d9377005de)
+![drawer](https://github.com/bruhmoment654/surf-flutter-study-jam-5/assets/99661323/32183c90-d746-44e5-b6cd-565f0bea2b78) ![dem_carousel](https://github.com/bruhmoment654/surf-flutter-study-jam-5/assets/99661323/a6ff2656-70ed-4383-b294-73d9377005de)</br>
 Drawer и список шаблонов
 
 
