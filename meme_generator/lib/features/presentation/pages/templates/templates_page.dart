@@ -17,7 +17,6 @@ class TemplatesPage extends StatefulWidget {
 }
 
 class _TemplatesPageState extends State<TemplatesPage> {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -26,7 +25,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
         appBar: AppBar(),
         drawer: const MyDrawer(),
         floatingActionButton: FloatingActionButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pushNamed(context, '/create');
           },
           child: const Icon(Icons.add),
@@ -34,7 +33,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
         body: Center(
           child: BlocBuilder<LocalTemplateBloc, LocalTemplatesState>(
             builder: (context, state) {
-              if (state.templates == null){
+              if (state.templates == null) {
                 return const Center(
                   child: Text('Add something'),
                 );
@@ -51,8 +50,9 @@ class _TemplatesPageState extends State<TemplatesPage> {
                                       arguments: templateItem);
                                 },
                                 template: templateItem,
-                                child: Image.network(
-                                    templateItem.uriToImage ?? ''),
+                                child: templateItem.img != null
+                                    ? Image.memory(templateItem.img!)
+                                    : Container(),
                               )),
                         ))
                     .toList(),

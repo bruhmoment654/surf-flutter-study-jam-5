@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meme_generator/core/constants/constants.dart';
 import 'package:meme_generator/features/domain/entities/template.dart';
 import 'package:meme_generator/features/domain/entities/text_data.dart';
@@ -23,10 +26,11 @@ class CreateTemplatePage extends StatefulWidget {
 class _CreateTemplatePageState extends State<CreateTemplatePage> {
   final Template _template = defaultTemplate;
 
+  Image? _image;
+
   @override
   void initState() {
     super.initState();
-    _template.textList[0].text = 'SAMPLE TEXT';
   }
 
   final List<Widget> _textInputs = [];
@@ -42,14 +46,12 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
       create: (_) => sl<LocalTemplateBloc>(),
       child: Scaffold(
         drawer: const MyDrawer(),
-        floatingActionButton: Builder(
-            builder: (context) {
-              return FloatingActionButton(
-                onPressed: () => _onFloatingActionButtonPressed(context),
-                child: const Icon(Icons.save),
-              );
-            }
-        ),
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            onPressed: () => _onFloatingActionButtonPressed(context),
+            child: const Icon(Icons.save),
+          );
+        }),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -57,9 +59,9 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
               children: [
                 ...[
                   Demotivator(
-                      onTap: () {},
+                      onTap: _setGalleryImage,
                       template: _template,
-                      child: Image.asset('assets/img/rock.jpg')),
+                      child: _image ?? const Column()),
                   const SizedBox(
                     height: 20,
                   )
@@ -110,12 +112,28 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
             min: 0,
             max: 325,
             value: _template.textList[index].position,
-            onChanged: (value) =>
-                setState(() {
+            onChanged: (value) => setState(() {
                   _template.textList[index].position = value;
                 }))
       ],
     );
+  }
+
+  _setGalleryImage() async {
+    final image = await _getFromGallery();
+    setState(() {
+      _image = Image.file(
+        File(image!.path),
+        fit: BoxFit.fill,
+        alignment: Alignment.center,
+      );
+    });
+    _template.img = await image!.readAsBytes();
+  }
+
+  Future<XFile?> _getFromGallery() async {
+    final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+    return img;
   }
 
   void _onFloatingActionButtonPressed(BuildContext context) {
@@ -126,6 +144,6 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
         content: Text('Article saved successfully.'),
       ),
     );
-    Navigator.pushNamed(context, '/demotivator', arguments: _template);
+    Navigator.pushNamed(context, '/templates', arguments: _template);
   }
 }
