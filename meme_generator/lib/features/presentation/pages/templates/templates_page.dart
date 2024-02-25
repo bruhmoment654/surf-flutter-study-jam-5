@@ -38,24 +38,29 @@ class _TemplatesPageState extends State<TemplatesPage> {
                   child: Text('Add something'),
                 );
               }
-              return CarouselSlider(
-                options: CarouselOptions(height: 350),
-                items: state.templates
-                    ?.map((templateItem) => Builder(
-                          builder: (context) => Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              child: Demotivator(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/demotivator',
-                                      arguments: templateItem);
-                                },
-                                template: templateItem,
-                                child: templateItem.img != null
-                                    ? Image.memory(templateItem.img!)
-                                    : Container(),
-                              )),
-                        ))
-                    .toList(),
+              return Padding(
+                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                child: GridView.count(
+                  childAspectRatio: 1,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children: state.templates!
+                      .map(
+                        (templateItem) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Demotivator(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/demotivator',
+                                  arguments: templateItem);
+                            },
+                            template: templateItem,
+                            child: templateItem.img != null
+                                ? Image.memory(templateItem.img!)
+                                : Container(),
+                          ),
+                        ),
+                      ).toList(),
+                ),
               );
             },
           ),

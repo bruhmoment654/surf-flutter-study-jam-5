@@ -58,10 +58,14 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
             child: ListView(
               children: [
                 ...[
-                  Demotivator(
-                      onTap: _setGalleryImage,
-                      template: _template,
-                      child: _image ?? const Column()),
+                  SizedBox(
+                    height: 300,
+                    width: 300,
+                    child: Demotivator(
+                        onTap: _setGalleryImage,
+                        template: _template,
+                        child: _image ?? const Column()),
+                  ),
                   const SizedBox(
                     height: 20,
                   )
@@ -110,7 +114,7 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
         ),
         Slider(
             min: 0,
-            max: 325,
+            max: 100,
             value: _template.textList[index].position,
             onChanged: (value) => setState(() {
                   _template.textList[index].position = value;

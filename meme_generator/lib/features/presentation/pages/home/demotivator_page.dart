@@ -38,7 +38,6 @@ class _DemotivatorPageState extends State<DemotivatorPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       floatingActionButton: _buildShareFloatingButton(),
       backgroundColor: Colors.grey[900],
@@ -50,6 +49,24 @@ class _DemotivatorPageState extends State<DemotivatorPage> {
               children: [
                 Screenshot(
                   controller: _screenshotController,
+                  child: SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: Demotivator(
+                      text: _text,
+                      controller: _screenshotController,
+                      onTap: _setGalleryImage,
+                      template: widget.template ?? defaultTemplate,
+                      child: _image ?? Image.asset('assets/img/rock.jpg'),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 300,
+                  height: 300,
                   child: Demotivator(
                     text: _text,
                     controller: _screenshotController,

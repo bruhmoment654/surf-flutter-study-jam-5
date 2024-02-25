@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:text_wrap_auto_size/text_wrap_auto_size.dart';
 
 import '../../domain/entities/template.dart';
 
@@ -25,36 +27,58 @@ class Demotivator extends StatefulWidget {
 }
 
 class _DemotivatorState extends State<Demotivator> {
-
   @override
   Widget build(BuildContext context) {
-    List<Widget> demotivatorWidgets = [_buildBackground()];
-    for (var element in widget.template.textList) {
-      demotivatorWidgets.add(Positioned(
-          top: element.position,
-          child: _buildText(element.text)));
-    }
-    return Stack(
-      alignment: Alignment.topCenter,
-        children: demotivatorWidgets);
-  }
-
-  _buildText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-          color: Colors.white, fontSize: 20, fontFamily: 'Times'),
+    return Center(
+      child: LayoutBuilder(builder: (context, constraints) {
+        List<Widget> demotivatorWidgets = [
+          _buildBackground(constraints.maxHeight, constraints.maxWidth)
+        ];
+        for (var element in widget.template.textList) {
+          print(constraints.maxHeight);
+          print(constraints.maxHeight / 100 * element.position);
+          demotivatorWidgets.add(Positioned(
+              top: constraints.maxHeight / 100 * element.position,
+              child: _buildAutoText(
+                  element.text, constraints.maxHeight, constraints.maxWidth)));
+        }
+        return SizedBox(
+            width: constraints.maxHeight,
+            height: constraints.maxHeight,
+            child: Stack(
+                alignment: Alignment.topCenter, children: demotivatorWidgets));
+      }),
     );
   }
 
-  _buildBackground() {
+  _buildAutoText(String text, double maxHeight, double maxWidth) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxHeight: maxHeight * .15,
+          maxWidth: maxWidth * .7),
+      child: AutoSizeText(
+        text,
+        maxLines: 1,
+        minFontSize: 15,
+        style: const TextStyle(
+          fontSize: 30,
+            color: Colors.white, fontFamily: 'Times'),
+      ),
+    );
+
+  }
+
+  _buildBackground(double maxHeight, double maxWidth) {
+    final top = maxHeight * .03;
+    final horizontal = maxWidth * .06;
+    final bottom = maxHeight * .13;
+    print('$top $horizontal $bottom');
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(5)
-      ),
+          color: Colors.black, borderRadius: BorderRadius.circular(5)),
       child: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 40),
+        padding: EdgeInsets.only(
+            top: top, left: horizontal, right: horizontal, bottom: bottom),
         child: Center(
             child: GestureDetector(
           onTap: widget.onTap,
@@ -62,8 +86,8 @@ class _DemotivatorState extends State<Demotivator> {
             decoration: BoxDecoration(
                 color: Colors.black,
                 border: Border.all(color: Colors.white, width: 2)),
-            height: 300,
-            width: 300,
+            width: maxWidth,
+            height: maxHeight,
             child: widget.child,
           ),
         )),
