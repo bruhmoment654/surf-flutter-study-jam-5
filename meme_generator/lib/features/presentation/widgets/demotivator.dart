@@ -72,7 +72,6 @@ class _DemotivatorState extends State<Demotivator> {
     final top = maxHeight * .03;
     final horizontal = maxWidth * .06;
     final bottom = maxHeight * .13;
-    print('$top $horizontal $bottom');
     return Container(
       decoration: BoxDecoration(
           color: Colors.black, borderRadius: BorderRadius.circular(5)),

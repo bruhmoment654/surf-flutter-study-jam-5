@@ -141,7 +141,7 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
   }
 
   void _onFloatingActionButtonPressed(BuildContext context) {
-    BlocProvider.of<LocalTemplateBloc>(context).add(SaveTemplates(_template));
+    BlocProvider.of<LocalTemplateBloc>(context).add(SaveTemplate(_template));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         backgroundColor: Colors.black,

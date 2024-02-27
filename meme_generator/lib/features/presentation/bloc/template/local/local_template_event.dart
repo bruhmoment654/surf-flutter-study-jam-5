@@ -14,10 +14,10 @@ class GetSavedTemplates extends LocalTemplateEvent {
   const GetSavedTemplates();
 }
 
-class RemoveTemplates extends LocalTemplateEvent {
-  const RemoveTemplates(Template template) : super(template: template);
+class RemoveTemplate extends LocalTemplateEvent {
+  const RemoveTemplate(Template template) : super(template: template);
 }
 
-class SaveTemplates extends LocalTemplateEvent {
-  const SaveTemplates(Template template) : super(template: template);
+class SaveTemplate extends LocalTemplateEvent {
+  const SaveTemplate(Template template) : super(template: template);
 }

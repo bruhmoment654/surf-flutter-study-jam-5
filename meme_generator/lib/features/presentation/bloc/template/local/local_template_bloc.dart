@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meme_generator/features/domain/usecases/delete_template.dart';
 import 'package:meme_generator/features/domain/usecases/save_template.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_event.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_state.dart';
@@ -10,11 +11,13 @@ class LocalTemplateBloc extends Bloc<LocalTemplateEvent, LocalTemplatesState> {
 
   final SaveTemplateUseCase _saveTemplateUseCase;
 
-  LocalTemplateBloc(this._saveTemplateUseCase,
-      this._getSavedTemplateUseCase)
+  final RemoveTemplateUseCase _removeTemplateUseCase;
+
+  LocalTemplateBloc(this._saveTemplateUseCase, this._getSavedTemplateUseCase, this._removeTemplateUseCase)
       : super(const LocalTemplatesLoading()) {
     on<GetSavedTemplates>(onGetSavedTemplates);
-    on<SaveTemplates>(onSaveTemplate);
+    on<SaveTemplate>(onSaveTemplate);
+    on<RemoveTemplate>(onRemoveTemplate);
   }
 
   void onGetSavedTemplates(
@@ -23,8 +26,15 @@ class LocalTemplateBloc extends Bloc<LocalTemplateEvent, LocalTemplatesState> {
     emit(LocalTemplatesDone(templates));
   }
 
+  void onRemoveTemplate(
+      RemoveTemplate event, Emitter<LocalTemplatesState> emit) async {
+    await _removeTemplateUseCase(params: event.template);
+    final templates = await _getSavedTemplateUseCase();
+    emit(LocalTemplatesDone(templates));
+  }
+
   void onSaveTemplate(
-      SaveTemplates saveTemplate, Emitter<LocalTemplatesState> emit) async {
+      SaveTemplate saveTemplate, Emitter<LocalTemplatesState> emit) async {
     await _saveTemplateUseCase(params: saveTemplate.template);
     final templates = await _getSavedTemplateUseCase();
     emit(LocalTemplatesDone(templates));
