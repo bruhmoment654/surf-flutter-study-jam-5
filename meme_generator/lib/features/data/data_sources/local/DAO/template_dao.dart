@@ -9,6 +9,9 @@ abstract class TemplateDao {
   @delete
   Future<void> deleteTemplate(TemplateModel template);
 
+  @delete
+  Future<void> deleteTemplates(List<TemplateModel> templates);
+
   @update
   Future<void> updateTemplate(TemplateModel template);
 

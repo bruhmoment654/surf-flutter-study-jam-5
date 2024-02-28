@@ -12,6 +12,8 @@ import 'package:meme_generator/features/presentation/bloc/template/local/local_t
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_event.dart';
 import 'package:meme_generator/features/presentation/widgets/custom_text_field.dart';
 import 'package:meme_generator/features/presentation/widgets/demotivator.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../injection_container.dart';
 
@@ -26,6 +28,7 @@ class EditTemplatePage extends StatefulWidget {
 
 class _EditTemplatePageState extends State<EditTemplatePage> {
   late final Template _template;
+  final _screenshotController = ScreenshotController();
 
   Image? _image;
 
@@ -34,7 +37,6 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
     super.initState();
 
     _template = widget.initialTemplate ?? defaultTemplate;
-    print(_template);
     if (_template.img != null) {
       _image = Image.memory(_template.img!);
     }
@@ -53,31 +55,49 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
       create: (_) => sl<LocalTemplateBloc>(),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
           leading: IconButton(
+            color: Colors.white,
             icon: const Icon(Icons.arrow_back),
             onPressed: context.pop,
           ),
+
         ),
         // drawer: const MyDrawer(),
-        floatingActionButton: Builder(builder: (context) {
-          return FloatingActionButton(
-            onPressed: () => _onFloatingActionButtonPressed(context),
-            child: const Icon(Icons.save),
-          );
-        }),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: 'shareBtn',
+              onPressed: _takeScreenshot,
+              child: const Icon(Icons.share),
+            ),
+            const SizedBox(width: 10,),
+            Builder(builder: (context) {
+              return FloatingActionButton(
+                heroTag: 'saveBtn',
+                onPressed: () => _onFloatingActionButtonPressed(context),
+                child: const Icon(Icons.save),
+              );
+            }),
+          ],
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: ListView(
               children: [
                 ...[
-                  SizedBox(
-                    height: 300,
-                    width: 300,
-                    child: Demotivator(
-                        onTap: _setGalleryImage,
-                        template: _template,
-                        child: _image ?? const Column()),
+                  Screenshot(
+                    controller: _screenshotController,
+                    child: SizedBox(
+                      height: 300,
+                      width: 300,
+                      child: Demotivator(
+                          onTap: _setGalleryImage,
+                          template: _template,
+                          child: _image ?? const Column()),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -117,9 +137,11 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
           style: const TextStyle(color: Colors.white),
           hintText: 'Enter demotivator text',
           onDataChanged: (data) {
-            setState(() {
-              _template.textList[index].text = data;
-            });
+            setState(
+              () {
+                _template.textList[index].text = data;
+              },
+            );
           },
         ),
         const SizedBox(
@@ -167,5 +189,10 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
       ),
     );
     context.pushNamed('templates');
+  }
+
+  _takeScreenshot() async {
+    final imgFile = await _screenshotController.capture();
+    Share.shareXFiles([XFile.fromData(imgFile!, mimeType: '.jpg')]);
   }
 }

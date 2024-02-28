@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:meme_generator/features/domain/entities/template.dart';
-import 'package:meme_generator/features/presentation/pages/create_template/edit_template_page.dart';
 import 'package:meme_generator/features/presentation/pages/templates/templates_page.dart';
+
+import '../../features/presentation/pages/edit_template/edit_template_page.dart';
 
 final router = GoRouter(routes: [
   GoRoute(
