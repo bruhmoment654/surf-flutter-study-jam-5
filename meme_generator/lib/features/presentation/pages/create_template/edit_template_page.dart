@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:js_interop';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -16,21 +17,28 @@ import 'package:meme_generator/features/presentation/widgets/drawer.dart';
 
 import '../../../injection_container.dart';
 
-class CreateTemplatePage extends StatefulWidget {
-  const CreateTemplatePage({super.key});
+class EditTemplatePage extends StatefulWidget {
+
+  final int? id;
+
+  const EditTemplatePage({super.key, this.id});
 
   @override
-  State<CreateTemplatePage> createState() => _CreateTemplatePageState();
+  State<EditTemplatePage> createState() => _EditTemplatePageState();
 }
 
-class _CreateTemplatePageState extends State<CreateTemplatePage> {
-  final Template _template = defaultTemplate;
+class _EditTemplatePageState extends State<EditTemplatePage> {
+  Template _template = defaultTemplate;
 
   Image? _image;
 
   @override
   void initState() {
     super.initState();
+
+    if (widget.id == null){
+      _template = defaultTemplate;
+    }
   }
 
   final List<Widget> _textInputs = [];
