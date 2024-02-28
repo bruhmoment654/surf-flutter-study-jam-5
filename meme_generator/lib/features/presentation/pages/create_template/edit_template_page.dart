@@ -1,34 +1,31 @@
 import 'dart:io';
-import 'dart:js_interop';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meme_generator/core/constants/constants.dart';
 import 'package:meme_generator/features/domain/entities/template.dart';
 import 'package:meme_generator/features/domain/entities/text_data.dart';
-import 'package:meme_generator/features/domain/usecases/save_template.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_bloc.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_event.dart';
 import 'package:meme_generator/features/presentation/widgets/custom_text_field.dart';
 import 'package:meme_generator/features/presentation/widgets/demotivator.dart';
-import 'package:meme_generator/features/presentation/widgets/drawer.dart';
 
 import '../../../injection_container.dart';
 
 class EditTemplatePage extends StatefulWidget {
+  final Template? initialTemplate;
 
-  final int? id;
-
-  const EditTemplatePage({super.key, this.id});
+  const EditTemplatePage({super.key, this.initialTemplate});
 
   @override
   State<EditTemplatePage> createState() => _EditTemplatePageState();
 }
 
 class _EditTemplatePageState extends State<EditTemplatePage> {
-  Template _template = defaultTemplate;
+  late final Template _template;
 
   Image? _image;
 
@@ -36,8 +33,10 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
   void initState() {
     super.initState();
 
-    if (widget.id == null){
-      _template = defaultTemplate;
+    _template = widget.initialTemplate ?? defaultTemplate;
+    print(_template);
+    if (_template.img != null) {
+      _image = Image.memory(_template.img!);
     }
   }
 
@@ -53,7 +52,13 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
     return BlocProvider(
       create: (_) => sl<LocalTemplateBloc>(),
       child: Scaffold(
-        drawer: const MyDrawer(),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: context.pop,
+          ),
+        ),
+        // drawer: const MyDrawer(),
         floatingActionButton: Builder(builder: (context) {
           return FloatingActionButton(
             onPressed: () => _onFloatingActionButtonPressed(context),
@@ -149,13 +154,18 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
   }
 
   void _onFloatingActionButtonPressed(BuildContext context) {
-    BlocProvider.of<LocalTemplateBloc>(context).add(SaveTemplate(_template));
+    if (_template.id == null) {
+      BlocProvider.of<LocalTemplateBloc>(context).add(SaveTemplate(_template));
+    } else {
+      BlocProvider.of<LocalTemplateBloc>(context)
+          .add(UpdateTemplate(_template));
+    }
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         backgroundColor: Colors.black,
-        content: Text('Article saved successfully.'),
+        content: Text('Template saved successfully.'),
       ),
     );
-    Navigator.pushNamed(context, '/templates', arguments: _template);
+    context.pushNamed('templates');
   }
 }

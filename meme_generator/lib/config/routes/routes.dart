@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meme_generator/features/domain/entities/template.dart';
-import 'package:meme_generator/features/presentation/pages/create_template/create_template_page.dart';
+import 'package:meme_generator/features/presentation/pages/create_template/edit_template_page.dart';
 import 'package:meme_generator/features/presentation/pages/home/demotivator_page.dart';
 import 'package:meme_generator/features/presentation/pages/templates/templates_page.dart';
 
@@ -13,7 +13,7 @@ class AppRoutes {
       case '/templates':
         return _materialRoute(const TemplatesPage());
       case '/create':
-        return _materialRoute(const CreateTemplatePage());
+        return _materialRoute(const EditTemplatePage());
       default:
         return _materialRoute(const TemplatesPage());
     }

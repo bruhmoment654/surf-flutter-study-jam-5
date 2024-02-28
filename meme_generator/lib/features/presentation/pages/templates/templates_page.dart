@@ -1,6 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_bloc.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_event.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_state.dart';
@@ -26,7 +26,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
         drawer: const MyDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/create');
+            context.pushNamed('create');
           },
           child: const Icon(Icons.add),
         ),
@@ -50,8 +50,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
                           margin: const EdgeInsets.symmetric(horizontal: 5),
                           child: Demotivator(
                             onTap: () {
-                              Navigator.pushNamed(context, '/demotivator',
-                                  arguments: templateItem);
+                              context.pushNamed('edit', extra: templateItem);
                             },
                             template: templateItem,
                             child: templateItem.img != null
@@ -59,7 +58,8 @@ class _TemplatesPageState extends State<TemplatesPage> {
                                 : Container(),
                           ),
                         ),
-                      ).toList(),
+                      )
+                      .toList(),
                 ),
               );
             },

@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:text_wrap_auto_size/text_wrap_auto_size.dart';
 
 import '../../domain/entities/template.dart';
 
@@ -35,8 +34,6 @@ class _DemotivatorState extends State<Demotivator> {
           _buildBackground(constraints.maxHeight, constraints.maxWidth)
         ];
         for (var element in widget.template.textList) {
-          print(constraints.maxHeight);
-          print(constraints.maxHeight / 100 * element.position);
           demotivatorWidgets.add(Positioned(
               top: constraints.maxHeight / 100 * element.position,
               child: _buildAutoText(

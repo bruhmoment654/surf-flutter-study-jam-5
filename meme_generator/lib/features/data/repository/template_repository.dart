@@ -14,12 +14,19 @@ class TemplateRepositoryImpl extends TemplateRepository {
   }
 
   @override
-  Future<List<Template>> getSavedTemplates() async{
+  Future<List<Template>> getSavedTemplates() async {
     return await _appDatabase.templateDao.getTemplates();
   }
 
   @override
   Future<void> saveTemplate(Template template) {
-return _appDatabase.templateDao.insertTemplate(TemplateModel.fromEntity(template));
+    return _appDatabase.templateDao
+        .insertTemplate(TemplateModel.fromEntity(template));
+  }
+
+  @override
+  Future<void> updateTemplate(Template template) {
+    return _appDatabase.templateDao
+        .updateTemplate(TemplateModel.fromEntity(template));
   }
 }

@@ -21,3 +21,7 @@ class RemoveTemplate extends LocalTemplateEvent {
 class SaveTemplate extends LocalTemplateEvent {
   const SaveTemplate(Template template) : super(template: template);
 }
+
+class UpdateTemplate extends LocalTemplateEvent {
+  const UpdateTemplate(Template template) : super(template: template);
+}

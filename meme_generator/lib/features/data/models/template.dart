@@ -8,6 +8,7 @@ import '../../domain/entities/text_data.dart';
 @Entity(tableName: 'template')
 class TemplateModel extends Template {
   @PrimaryKey(autoGenerate: true)
+  @override
   int? id;
 
   TemplateModel(
@@ -15,10 +16,10 @@ class TemplateModel extends Template {
       Uint8List? imageBytes,
       String? uriToImage,
       required List<TextData> textList})
-      : super(textList: textList, uriToImage: uriToImage, img: imageBytes);
+      : super(id: id, textList: textList, uriToImage: uriToImage, img: imageBytes);
 
   factory TemplateModel.fromEntity(Template template) => TemplateModel(
-      id: null,
+      id: template.id,
       imageBytes: template.img,
       uriToImage: template.uriToImage,
       textList: template.textList);

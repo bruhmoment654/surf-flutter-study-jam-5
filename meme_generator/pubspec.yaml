@@ -16,28 +16,21 @@ dependencies:
 
   #images from url
   cached_network_image: ^3.3.1
-
   #images from gallery
   image_picker: ^1.0.7
   screenshot: ^2.1.0
-
   #share images
   share_plus: ^7.2.2
-
   #slider for template list
   carousel_slider: ^4.2.1
-
   #database
   floor: ^1.4.2
-
   #bloc
   flutter_bloc: ^8.1.4
-
   #DI
   get_it: ^7.6.7
-
   auto_size_text: ^3.0.0
-  text_wrap_auto_size: ^1.2.3
+  go_router: ^13.2.0
 
   equatable: ^2.0.5
 dev_dependencies:

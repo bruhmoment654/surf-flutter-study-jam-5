@@ -4,6 +4,7 @@ import 'package:meme_generator/features/domain/repositories/template_repository.
 import 'package:meme_generator/features/domain/usecases/delete_template.dart';
 import 'package:meme_generator/features/domain/usecases/get_templates.dart';
 import 'package:meme_generator/features/domain/usecases/save_template.dart';
+import 'package:meme_generator/features/domain/usecases/update_template.dart';
 import 'package:meme_generator/features/presentation/bloc/template/local/local_template_bloc.dart';
 
 import 'data/data_sources/local/app_database.dart';
@@ -18,7 +19,8 @@ Future<void> initDependencies() async {
   sl.registerSingleton<GetTemplatesUseCase>(GetTemplatesUseCase(sl()));
   sl.registerSingleton<SaveTemplateUseCase>(SaveTemplateUseCase(sl()));
   sl.registerSingleton<RemoveTemplateUseCase>(RemoveTemplateUseCase(sl()));
+  sl.registerSingleton<UpdateTemplateUseCase>(UpdateTemplateUseCase(sl()));
 
   sl.registerFactory<LocalTemplateBloc>(
-      () => LocalTemplateBloc(sl(), sl(), sl()));
+      () => LocalTemplateBloc(sl(), sl(), sl(), sl()));
 }
