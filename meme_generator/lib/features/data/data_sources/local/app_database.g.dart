@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `template` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `id` INTEGER, `img` BLOB, `uriToImage` TEXT, `textList` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `template` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `img` BLOB, `uriToImage` TEXT, `textList` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -109,7 +109,6 @@ class _$TemplateDao extends TemplateDao {
             'template',
             (TemplateModel item) => <String, Object?>{
                   'id': item.id,
-                  'id': item.id,
                   'img': item.img,
                   'uriToImage': item.uriToImage,
                   'textList': _stringListConverter.encode(item.textList)
@@ -120,7 +119,6 @@ class _$TemplateDao extends TemplateDao {
             ['id'],
             (TemplateModel item) => <String, Object?>{
                   'id': item.id,
-                  'id': item.id,
                   'img': item.img,
                   'uriToImage': item.uriToImage,
                   'textList': _stringListConverter.encode(item.textList)
@@ -130,7 +128,6 @@ class _$TemplateDao extends TemplateDao {
             'template',
             ['id'],
             (TemplateModel item) => <String, Object?>{
-                  'id': item.id,
                   'id': item.id,
                   'img': item.img,
                   'uriToImage': item.uriToImage,
