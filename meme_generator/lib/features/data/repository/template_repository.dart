@@ -29,4 +29,10 @@ class TemplateRepositoryImpl extends TemplateRepository {
     return _appDatabase.templateDao
         .updateTemplate(TemplateModel.fromEntity(template));
   }
+
+  @override
+  Future<void> deleteTemplates(List<Template> templates) {
+    return _appDatabase.templateDao.deleteTemplates(
+        templates.map((e) => TemplateModel.fromEntity(e)).toList());
+  }
 }

@@ -155,7 +155,7 @@ class _$TemplateDao extends TemplateDao {
         mapper: (Map<String, Object?> row) => TemplateModel(
             id: row['id'] as int?,
             uriToImage: row['uriToImage'] as String?,
-            imageBytes: row['img'] as Uint8List,
+            imageBytes: row['img'] as Uint8List?,
             textList: _stringListConverter.decode(row['textList'] as String)));
   }
 

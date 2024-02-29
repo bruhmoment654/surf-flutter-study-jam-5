@@ -38,8 +38,12 @@ dev_dependencies:
     sdk: flutter
   floor_generator: ^1.4.2
   build_runner: ^2.4.8
+  flutter_launcher_icons: ^0.13.1
 
   flutter_lints: ^2.0.1
+
+flutter_icons:
+  image_path:
 flutter:
   uses-material-design: true
   assets:

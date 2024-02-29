@@ -37,6 +37,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
       create: (_) => sl<LocalTemplateBloc>()..add(const GetSavedTemplates()),
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Colors.transparent,
           title: const Text(
             'Welcome',
@@ -49,11 +50,11 @@ class _TemplatesPageState extends State<TemplatesPage> {
                     }),
                 icon: Icon(
                   _isDeleting ? Icons.clear : Icons.delete,
-                  color: Colors.white,
                 ))
           ],
         ),
-        floatingActionButton: _buildFloatingActionButton(),
+        floatingActionButton:
+            Builder(builder: (context) => _buildFloatingActionButton(context)),
         body: Center(
           child: BlocBuilder<LocalTemplateBloc, LocalTemplatesState>(
             builder: (context, state) {
@@ -79,7 +80,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
     );
   }
 
-  Widget _buildFloatingActionButton() {
+  Widget _buildFloatingActionButton(BuildContext context) {
     if (!_isDeleting) {
       return FloatingActionButton(
         onPressed: () {
@@ -90,9 +91,20 @@ class _TemplatesPageState extends State<TemplatesPage> {
     } else {
       return FloatingActionButton(
         onPressed: () {
-          final filteredMap = Map<Template, bool>.from(_toDelete)..removeWhere((key, value) => !value);
+          final filteredMap = Map<Template, bool>.from(_toDelete)
+            ..removeWhere((key, value) => !value);
           List<Template> keys = filteredMap.keys.toList();
-          print(keys);
+          BlocProvider.of<LocalTemplateBloc>(context)
+              .add(RemoveTemplates(keys));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.black,
+              content: Text('Templates deleted.'),
+            ),
+          );
+          setState((){
+            _isDeleting = false;
+          });
         },
         child: const Icon(Icons.delete),
       );

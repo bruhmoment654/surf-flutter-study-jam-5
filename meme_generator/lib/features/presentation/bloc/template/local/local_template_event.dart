@@ -3,8 +3,9 @@ import 'package:meme_generator/features/domain/entities/template.dart';
 
 sealed class LocalTemplateEvent extends Equatable {
   final Template? template;
+  final List<Template>? templates;
 
-  const LocalTemplateEvent({this.template});
+  const LocalTemplateEvent({this.template, this.templates});
 
   @override
   List<Object> get props => [template!];
@@ -16,6 +17,10 @@ class GetSavedTemplates extends LocalTemplateEvent {
 
 class RemoveTemplate extends LocalTemplateEvent {
   const RemoveTemplate(Template template) : super(template: template);
+}
+
+class RemoveTemplates extends LocalTemplateEvent {
+  const RemoveTemplates(List<Template> templates) : super(templates: templates);
 }
 
 class SaveTemplate extends LocalTemplateEvent {

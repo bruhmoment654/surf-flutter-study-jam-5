@@ -36,7 +36,7 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
   void initState() {
     super.initState();
 
-    _template = widget.initialTemplate ?? defaultTemplate;
+    _template = widget.initialTemplate ?? Template(textList: [TextData(text: 'PLACEHOLDER', position: 85)]);
     if (_template.img != null) {
       _image = Image.memory(_template.img!);
     }
@@ -160,14 +160,16 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
 
   _setGalleryImage() async {
     final image = await _getFromGallery();
-    setState(() {
-      _image = Image.file(
-        File(image!.path),
-        fit: BoxFit.fill,
-        alignment: Alignment.center,
-      );
-    });
-    _template.img = await image!.readAsBytes();
+    if (image != null) {
+      setState(() {
+        _image = Image.file(
+          File(image.path),
+          fit: BoxFit.fill,
+          alignment: Alignment.center,
+        );
+      });
+      _template.img = await image.readAsBytes();
+    }
   }
 
   Future<XFile?> _getFromGallery() async {
@@ -188,7 +190,10 @@ class _EditTemplatePageState extends State<EditTemplatePage> {
         content: Text('Template saved successfully.'),
       ),
     );
-    context.pushNamed('templates');
+    context.pop();
+    context.pushReplacementNamed('templates');
+    // context.pushReplacementNamed('templates');
+    // GoRouter.of(context).replaceNamed('templates');
   }
 
   _takeScreenshot() async {

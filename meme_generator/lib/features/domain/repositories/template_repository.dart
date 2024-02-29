@@ -7,5 +7,7 @@ abstract class TemplateRepository {
 
   Future<void> deleteTemplate(Template template);
 
+  Future<void> deleteTemplates(List<Template> templates);
+
   Future<void> updateTemplate(Template template);
 }
